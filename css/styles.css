@@ -2818,44 +2818,35 @@ img.u-pull-left {
   
   
 /* e.g. 60px total gap */
-.swiper-button-prev {
-  left: calc(50% - 400px);
-}
-.swiper-button-next {
-  left: calc(50% + 380px);
-}
-/* ensure each slide is exactly the width of the swiper container */
-.swiper-wrapper {
-    display: flex;          /* make wrapper a flex container */
-  }
-  .swiper-slide {
-    flex: 0 0 100% !important;  /* don’t grow/shrink—always 100% of container */
-  }  
-  
-/* make sure each slide is exactly as wide as the container */
-.my-photo-slider .swiper-slide {
-    flex: 0 0 100% !important;
-    width: 100% !important;
-  }
- .my-photo-slider {
-    width: 800px;       /* whatever target max width you like */
-    height: 450px;      /* or set a height to lock the aspect ratio */
-    margin: 0 auto;     /* centers the whole thing */
-  }
-  /* 1 & 2. Make the slider container allow visible overflow and be a positioning context */
+/* Clean photo slider styles */
 .my-photo-slider {
+    width: 800px;
+    height: 450px;
+    margin: 0 auto;
     position: relative;
-    overflow: visible;    /* let arrows show outside the wrapper if needed */
-  }
-  
-  /* 3. Force arrows back into view (tweak the left/right values until you like the spacing) */
-  .my-photo-slider .swiper-button-prev,
-  .my-photo-slider .swiper-button-next {
-    display: block;       /* ensure they’re not accidentally hidden */
-    z-index: 10;          /* sit above slides */
-    top: 50%;             /* vertically centered */
-    transform: translateY(-50%);
-  }
+}
+
+.my-photo-slider .swiper-button-prev {
+    left: 10px;
+}
+
+.my-photo-slider .swiper-button-next {
+    right: 10px;
+}
+
+.swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.swiper-slide img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+}
   
   
 
