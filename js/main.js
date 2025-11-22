@@ -137,65 +137,76 @@
 
 
 
-   /* photoswipe
-    * ----------------------------------------------------- */
-    const ssPhotoswipe = function() {
+   /* ===================================================================
+ * Photo Modal JavaScript
+ * Add this to your main.js or include as separate file
+ * ------------------------------------------------------------------- */
 
-        const items = [];
-        const pswp = document.querySelectorAll('.pswp')[0];
-        const folioItems = document.querySelectorAll('.folio-item');
+// Function to open modal when image is clicked
+function openModal(element) {
+    const modal = document.getElementById("photoModal");
+    const modalImage = document.getElementById("modalImage");
+    const img = element.querySelector('img');
+    
+    if (modal && modalImage && img) {
+        modal.style.display = "flex";
+        modalImage.src = img.src;
+        modalImage.alt = img.alt;
+        
+        // Prevent body scroll when modal is open
+        document.body.style.overflow = "hidden";
+    }
+}
 
-        if (!(pswp && folioItems)) return;
+// Function to close the modal
+function closeModal() {
+    const modal = document.getElementById("photoModal");
+    if (modal) {
+        modal.style.display = "none";
+        // Restore body scroll
+        document.body.style.overflow = "auto";
+    }
+}
 
-        folioItems.forEach(function(folioItem) {
-
-            let folio = folioItem;
-            let thumbLink = folio.querySelector('.folio-item__thumb-link');
-            let title = folio.querySelector('.folio-item__title');
-            let caption = folio.querySelector('.folio-item__caption');
-            let titleText = '<h4>' + title.innerHTML + '</h4>';
-            let captionText = caption.innerHTML;
-            let href = thumbLink.getAttribute('href');
-            let size = thumbLink.dataset.size.split('x'); 
-            let width  = size[0];
-            let height = size[1];
-
-            let item = {
-                src  : href,
-                w    : width,
-                h    : height
+// Initialize modal functionality when page loads
+document.addEventListener("DOMContentLoaded", function() {
+    const modal = document.getElementById("photoModal");
+    const closeBtn = document.querySelector(".photo-modal__close");
+    const modalImage = document.getElementById("modalImage");
+    
+    // Hide modal initially
+    if (modal) {
+        modal.style.display = "none";
+    }
+    
+    // Close button click
+    if (closeBtn) {
+        closeBtn.addEventListener("click", closeModal);
+    }
+    
+    // Click outside image to close
+    if (modal) {
+        modal.addEventListener("click", function(event) {
+            if (event.target === modal) {
+                closeModal();
             }
-
-            if (caption) {
-                item.title = titleText.trim() + captionText.trim();
-            }
-
-            items.push(item);
-
         });
-
-        // bind click event
-        folioItems.forEach(function(folioItem, i) {
-
-            let thumbLink = folioItem.querySelector('.folio-item__thumb-link');
-
-            thumbLink.addEventListener('click', function(e) {
-
-                e.preventDefault();
-
-                let options = {
-                    index: i,
-                    showHideOpacity: true
-                }
-
-                // initialize PhotoSwipe
-                let lightBox = new PhotoSwipe(pswp, PhotoSwipeUI_Default, items, options);
-                lightBox.init();
-            });
-
+    }
+    
+    // Prevent modal from closing when clicking the image
+    if (modalImage) {
+        modalImage.addEventListener("click", function(event) {
+            event.stopPropagation();
         });
-
-    };  // end ssPhotoSwipe
+    }
+    
+    // Close with Escape key
+    document.addEventListener("keydown", function(event) {
+        if (event.key === "Escape") {
+            closeModal();
+        }
+    });
+});
 
 
 
