@@ -387,3 +387,74 @@ document.addEventListener("DOMContentLoaded", function() {
     })();
 
 })(document.documentElement);
+
+/* ===================================================================
+ * Photo Modal JavaScript
+ * Add this to your main.js or include as separate file
+ * ------------------------------------------------------------------- */
+
+// Function to open modal when image is clicked
+function openModal(element) {
+    const modal = document.getElementById("photoModal");
+    const modalImage = document.getElementById("modalImage");
+    const img = element.querySelector('img');
+    
+    if (modal && modalImage && img) {
+        modal.style.display = "flex";
+        modalImage.src = img.src;
+        modalImage.alt = img.alt;
+        
+        // Prevent body scroll when modal is open
+        document.body.style.overflow = "hidden";
+    }
+}
+
+// Function to close the modal
+function closeModal() {
+    const modal = document.getElementById("photoModal");
+    if (modal) {
+        modal.style.display = "none";
+        // Restore body scroll
+        document.body.style.overflow = "auto";
+    }
+}
+
+// Initialize modal functionality when page loads
+document.addEventListener("DOMContentLoaded", function() {
+    const modal = document.getElementById("photoModal");
+    const closeBtn = document.querySelector(".photo-modal__close");
+    const modalImage = document.getElementById("modalImage");
+    
+    // Hide modal initially
+    if (modal) {
+        modal.style.display = "none";
+    }
+    
+    // Close button click
+    if (closeBtn) {
+        closeBtn.addEventListener("click", closeModal);
+    }
+    
+    // Click outside image to close
+    if (modal) {
+        modal.addEventListener("click", function(event) {
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+    }
+    
+    // Prevent modal from closing when clicking the image
+    if (modalImage) {
+        modalImage.addEventListener("click", function(event) {
+            event.stopPropagation();
+        });
+    }
+    
+    // Close with Escape key
+    document.addEventListener("keydown", function(event) {
+        if (event.key === "Escape") {
+            closeModal();
+        }
+    });
+});
